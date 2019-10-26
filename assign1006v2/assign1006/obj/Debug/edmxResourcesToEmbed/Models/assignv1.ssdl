@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="assignv1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="assignv1StoreContainer">
+    <EntitySet Name="FOODSet" EntityType="assignv1.Store.FOODSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SPOTSet" EntityType="assignv1.Store.SPOTSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FOODSPOT" EntityType="assignv1.Store.FOODSPOT" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_FOODSPOT_FOOD" Association="assignv1.Store.FK_FOODSPOT_FOOD">
+      <End Role="FOOD" EntitySet="FOODSet" />
+      <End Role="FOODSPOT" EntitySet="FOODSPOT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FOODSPOT_SPOT" Association="assignv1.Store.FK_FOODSPOT_SPOT">
+      <End Role="SPOT" EntitySet="SPOTSet" />
+      <End Role="FOODSPOT" EntitySet="FOODSPOT" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="FOODSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="foodname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="foodcalorie" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="foodaddress" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SPOTSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="spotname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="spotcalorie" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="spotdesc" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PLANId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FOODSPOT">
+    <Key>
+      <PropertyRef Name="FOOD_Id" />
+      <PropertyRef Name="SPOT_Id" />
+    </Key>
+    <Property Name="FOOD_Id" Type="int" Nullable="false" />
+    <Property Name="SPOT_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_FOODSPOT_FOOD">
+    <End Role="FOOD" Type="assignv1.Store.FOODSet" Multiplicity="1" />
+    <End Role="FOODSPOT" Type="assignv1.Store.FOODSPOT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FOOD">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FOODSPOT">
+        <PropertyRef Name="FOOD_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FOODSPOT_SPOT">
+    <End Role="FOODSPOT" Type="assignv1.Store.FOODSPOT" Multiplicity="*" />
+    <End Role="SPOT" Type="assignv1.Store.SPOTSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="SPOT">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FOODSPOT">
+        <PropertyRef Name="SPOT_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,43 @@
+﻿@model assign1006.Models.FOOD
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>FOOD</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.foodname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.foodname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.foodcalorie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.foodcalorie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.foodaddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.foodaddress)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

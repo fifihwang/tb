@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="assignv1StoreContainer" CdmEntityContainer="assignv1Container">
+    <EntitySetMapping Name="FOODSet">
+      <EntityTypeMapping TypeName="IsTypeOf(assignv1.FOOD)">
+        <MappingFragment StoreEntitySet="FOODSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="foodname" ColumnName="foodname" />
+          <ScalarProperty Name="foodcalorie" ColumnName="foodcalorie" />
+          <ScalarProperty Name="foodaddress" ColumnName="foodaddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SPOTSet">
+      <EntityTypeMapping TypeName="IsTypeOf(assignv1.SPOT)">
+        <MappingFragment StoreEntitySet="SPOTSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="spotname" ColumnName="spotname" />
+          <ScalarProperty Name="spotcalorie" ColumnName="spotcalorie" />
+          <ScalarProperty Name="spotdesc" ColumnName="spotdesc" />
+          <ScalarProperty Name="PLANId" ColumnName="PLANId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="FOODSPOT" TypeName="assignv1.FOODSPOT" StoreEntitySet="FOODSPOT">
+      <EndProperty Name="FOOD">
+        <ScalarProperty Name="Id" ColumnName="FOOD_Id" />
+      </EndProperty>
+      <EndProperty Name="SPOT">
+        <ScalarProperty Name="Id" ColumnName="SPOT_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

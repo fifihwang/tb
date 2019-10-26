@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="assignv1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="assignv1StoreContainer">
+    <EntitySet Name="FOODSet" EntityType="assignv1.Store.FOODSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SPOTSet" EntityType="assignv1.Store.SPOTSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FOODSPOT" EntityType="assignv1.Store.FOODSPOT" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_FOODSPOT_FOOD" Association="assignv1.Store.FK_FOODSPOT_FOOD">
+      <End Role="FOOD" EntitySet="FOODSet" />
+      <End Role="FOODSPOT" EntitySet="FOODSPOT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FOODSPOT_SPOT" Association="assignv1.Store.FK_FOODSPOT_SPOT">
+      <End Role="SPOT" EntitySet="SPOTSet" />
+      <End Role="FOODSPOT" EntitySet="FOODSPOT" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="FOODSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="foodname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="foodcalorie" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="foodaddress" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SPOTSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="spotname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="spotcalorie" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="spotdesc" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PLANId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FOODSPOT">
+    <Key>
+      <PropertyRef Name="FOOD_Id" />
+      <PropertyRef Name="SPOT_Id" />
+    </Key>
+    <Property Name="FOOD_Id" Type="int" Nullable="false" />
+    <Property Name="SPOT_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_FOODSPOT_FOOD">
+    <End Role="FOOD" Type="assignv1.Store.FOODSet" Multiplicity="1" />
+    <End Role="FOODSPOT" Type="assignv1.Store.FOODSPOT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FOOD">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FOODSPOT">
+        <PropertyRef Name="FOOD_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FOODSPOT_SPOT">
+    <End Role="FOODSPOT" Type="assignv1.Store.FOODSPOT" Multiplicity="*" />
+    <End Role="SPOT" Type="assignv1.Store.SPOTSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="SPOT">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FOODSPOT">
+        <PropertyRef Name="SPOT_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="assignv1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="assignv1Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FOODSet" EntityType="assignv1.FOOD" />
+          <EntitySet Name="SPOTSet" EntityType="assignv1.SPOT" />
+          <AssociationSet Name="FOODSPOT" Association="assignv1.FOODSPOT">
+            <End Role="FOOD" EntitySet="FOODSet" />
+            <End Role="SPOT" EntitySet="SPOTSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="FOOD">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="foodname" Type="String" Nullable="false" />
+          <Property Name="foodcalorie" Type="String" Nullable="false" />
+          <Property Name="foodaddress" Type="String" Nullable="false" />
+          <NavigationProperty Name="SPOT" Relationship="assignv1.FOODSPOT" FromRole="FOOD" ToRole="SPOT" />
+        </EntityType>
+        <EntityType Name="SPOT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="spotname" Type="String" Nullable="false" />
+          <Property Name="spotcalorie" Type="String" Nullable="false" />
+          <Property Name="spotdesc" Type="String" Nullable="false" />
+          <Property Name="PLANId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FOOD" Relationship="assignv1.FOODSPOT" FromRole="SPOT" ToRole="FOOD" />
+        </EntityType>
+        <Association Name="FOODSPOT">
+          <End Type="assignv1.FOOD" Role="FOOD" Multiplicity="*" />
+          <End Type="assignv1.SPOT" Role="SPOT" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="assignv1StoreContainer" CdmEntityContainer="assignv1Container">
+    <EntitySetMapping Name="FOODSet">
+      <EntityTypeMapping TypeName="IsTypeOf(assignv1.FOOD)">
+        <MappingFragment StoreEntitySet="FOODSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="foodname" ColumnName="foodname" />
+          <ScalarProperty Name="foodcalorie" ColumnName="foodcalorie" />
+          <ScalarProperty Name="foodaddress" ColumnName="foodaddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SPOTSet">
+      <EntityTypeMapping TypeName="IsTypeOf(assignv1.SPOT)">
+        <MappingFragment StoreEntitySet="SPOTSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="spotname" ColumnName="spotname" />
+          <ScalarProperty Name="spotcalorie" ColumnName="spotcalorie" />
+          <ScalarProperty Name="spotdesc" ColumnName="spotdesc" />
+          <ScalarProperty Name="PLANId" ColumnName="PLANId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="FOODSPOT" TypeName="assignv1.FOODSPOT" StoreEntitySet="FOODSPOT">
+      <EndProperty Name="FOOD">
+        <ScalarProperty Name="Id" ColumnName="FOOD_Id" />
+      </EndProperty>
+      <EndProperty Name="SPOT">
+        <ScalarProperty Name="Id" ColumnName="SPOT_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

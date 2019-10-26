@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="assignv1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="assignv1Container" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="FOODSet" EntityType="assignv1.FOOD" />
+    <EntitySet Name="SPOTSet" EntityType="assignv1.SPOT" />
+    <AssociationSet Name="FOODSPOT" Association="assignv1.FOODSPOT">
+      <End Role="FOOD" EntitySet="FOODSet" />
+      <End Role="SPOT" EntitySet="SPOTSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="FOOD">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="foodname" Type="String" Nullable="false" />
+    <Property Name="foodcalorie" Type="String" Nullable="false" />
+    <Property Name="foodaddress" Type="String" Nullable="false" />
+    <NavigationProperty Name="SPOT" Relationship="assignv1.FOODSPOT" FromRole="FOOD" ToRole="SPOT" />
+  </EntityType>
+  <EntityType Name="SPOT">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="spotname" Type="String" Nullable="false" />
+    <Property Name="spotcalorie" Type="String" Nullable="false" />
+    <Property Name="spotdesc" Type="String" Nullable="false" />
+    <Property Name="PLANId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="FOOD" Relationship="assignv1.FOODSPOT" FromRole="SPOT" ToRole="FOOD" />
+  </EntityType>
+  <Association Name="FOODSPOT">
+    <End Type="assignv1.FOOD" Role="FOOD" Multiplicity="*" />
+    <End Type="assignv1.SPOT" Role="SPOT" Multiplicity="*" />
+  </Association>
+</Schema>
